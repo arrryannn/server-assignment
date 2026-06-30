@@ -22,15 +22,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/about", (req, res) => {
-    res.send("This is the About Page");
+    res.json({
+        page: "About",
+        description: "Express.js assignment server",
+        tech: ["Node.js", "Express", "Middleware"],
+        status: "learning project"
+    });
 });
 
 app.get("/user/:name", (req, res) => {
-    const name = req.params.name;
-
     res.json({
-        message: "User found successfully",
-        name: name
+        message: "User fetched",
+        user: req.params.name,
+        success: true
     });
 });
 
@@ -39,8 +43,9 @@ app.get("/search", (req, res) => {
     const batch = req.query.batch;
 
     res.json({
-        course: course,
-        batch: batch
+        message: "Search data received",
+        course: course || "not provided",
+        batch: batch || "not provided"
     });
 });
 
@@ -48,12 +53,9 @@ app.post("/student", (req, res) => {
     const { name, age, city } = req.body;
 
     res.json({
-        message: "Student data received",
-        student: {
-            name,
-            age,
-            city
-        }
+        message: "Student data stored",
+        data: { name, age, city },
+        success: true
     });
 });
 
